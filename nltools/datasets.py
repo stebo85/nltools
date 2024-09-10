@@ -22,7 +22,8 @@ __license__ = "MIT"
 import os
 import pandas as pd
 from nltools.data import Brain_Data
-from nilearn.datasets.utils import _get_dataset_dir, _fetch_file
+from nilearn.datasets.utils import get_data_dirs
+from nilearn.datasets._utils import fetch_files
 from pynv import Client
 
 # Optional dependencies
@@ -98,7 +99,7 @@ def download_collection(
     """
 
     if data_dir is None:
-        data_dir = _get_dataset_dir(str(collection), data_dir=data_dir, verbose=verbose)
+        data_dir = get_data_dirs(str(collection), data_dir=data_dir, verbose=verbose)
 
     # Get collection Metadata
     metadata = get_collection_image_metadata(collection=collection, data_dir=data_dir)
@@ -107,7 +108,7 @@ def download_collection(
     files = []
     for f in metadata["file"]:
         files.append(
-            _fetch_file(
+            fetch_files(
                 f, data_dir, resume=resume, verbose=verbose, overwrite=overwrite
             )
         )
@@ -128,7 +129,7 @@ def fetch_pain(data_dir=None, resume=True, verbose=1):
 
     collection = 504
     dataset_name = "chang2015_pain"
-    data_dir = _get_dataset_dir(dataset_name, data_dir=data_dir, verbose=verbose)
+    data_dir = get_data_dirs(dataset_name, data_dir=data_dir, verbose=verbose)
     metadata, files = download_collection(
         collection=collection, data_dir=data_dir, resume=resume, verbose=verbose
     )
@@ -148,7 +149,7 @@ def fetch_emotion_ratings(data_dir=None, resume=True, verbose=1):
 
     collection = 1964
     dataset_name = "chang2015_emotion_ratings"
-    data_dir = _get_dataset_dir(dataset_name, data_dir=data_dir, verbose=verbose)
+    data_dir = get_data_dirs(dataset_name, data_dir=data_dir, verbose=verbose)
     metadata, files = download_collection(
         collection=collection, data_dir=data_dir, resume=resume, verbose=verbose
     )
